@@ -56,16 +56,16 @@ func newStreamingStrategy(ctx context.Context, jaeger *v1.Jaeger) S {
 		manifest.configMaps = append(manifest.configMaps, *cm)
 	}
 
-	_, pfound := jaeger.Spec.Collector.Options.GenericMap()["kafka.producer.brokers"]
-	_, cfound := jaeger.Spec.Ingester.Options.GenericMap()["kafka.consumer.brokers"]
-	provisioned := jaeger.Annotations[v1.AnnotationProvisionedKafkaKey] == v1.AnnotationProvisionedKafkaValue
+	//_, pfound := jaeger.Spec.Collector.Options.GenericMap()["kafka.producer.brokers"]
+	//_, cfound := jaeger.Spec.Ingester.Options.GenericMap()["kafka.consumer.brokers"]
+	//provisioned := jaeger.Annotations[v1.AnnotationProvisionedKafkaKey] == v1.AnnotationProvisionedKafkaValue
 
 	// we provision a Kafka when no brokers have been set, or, when we are not in the first run,
 	// when we know we've been the ones placing the broker information in the configuration
-	if (!pfound && !cfound) || provisioned {
-		jaeger.Logger().Info("Provisioning Kafka, this might take a while...")
-		manifest = autoProvisionKafka(ctx, jaeger, manifest)
-	}
+	//if (!pfound && !cfound) || provisioned {
+	//	jaeger.Logger().Info("Provisioning Kafka, this might take a while...")
+	//	manifest = autoProvisionKafka(ctx, jaeger, manifest)
+	//}
 
 	// add the daemonsets
 	if ds := agent.Get(); ds != nil {

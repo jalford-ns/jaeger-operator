@@ -279,22 +279,22 @@ func (r *ReconcileJaeger) apply(ctx context.Context, jaeger v1.Jaeger, str strat
 		}).Warn("An Elasticsearch cluster should be provisioned, but provisioning is disabled for this Jaeger Operator")
 	}
 
-	kafkas := str.Kafkas()
-	kafkaUsers := str.KafkaUsers()
-	if strings.EqualFold(viper.GetString("kafka-provision"), v1.FlagProvisionKafkaYes) {
-		if err := r.applyKafkas(ctx, jaeger, kafkas); err != nil {
-			return jaeger, tracing.HandleError(err, span)
-		}
-
-		if err := r.applyKafkaUsers(ctx, jaeger, kafkaUsers); err != nil {
-			return jaeger, tracing.HandleError(err, span)
-		}
-	} else if len(kafkas) > 0 || len(kafkaUsers) > 0 {
-		log.WithFields(log.Fields{
-			"namespace": jaeger.Namespace,
-			"instance":  jaeger.Name,
-		}).Warn("A Kafka cluster should be provisioned, but provisioning is disabled for this Jaeger Operator")
-	}
+	//kafkas := str.Kafkas()
+	//kafkaUsers := str.KafkaUsers()
+	//if strings.EqualFold(viper.GetString("kafka-provision"), v1.FlagProvisionKafkaYes) {
+	//	if err := r.applyKafkas(ctx, jaeger, kafkas); err != nil {
+	//		return jaeger, tracing.HandleError(err, span)
+	//	}
+	//
+	//		if err := r.applyKafkaUsers(ctx, jaeger, kafkaUsers); err != nil {
+	//		return jaeger, tracing.HandleError(err, span)
+	//	}
+	//} else if len(kafkas) > 0 || len(kafkaUsers) > 0 {
+	//	log.WithFields(log.Fields{
+	//		"namespace": jaeger.Namespace,
+	//		"instance":  jaeger.Name,
+	//	}).Warn("A Kafka cluster should be provisioned, but provisioning is disabled for this Jaeger Operator")
+	//}
 
 	// storage dependencies have to be deployed after ES is ready
 	if err := r.handleDependencies(ctx, str); err != nil {
