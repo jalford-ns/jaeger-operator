@@ -40,6 +40,7 @@ func NewQueryService(jaeger *v1.Jaeger, selector map[string]string) *corev1.Serv
 		},
 		Spec: corev1.ServiceSpec{
 			Selector:  selector,
+			Type: "NodePort",
 			ClusterIP: "",
 			Ports: []corev1.ServicePort{
 				{
